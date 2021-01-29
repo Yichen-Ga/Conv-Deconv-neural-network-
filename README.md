@@ -21,7 +21,7 @@
   
   I will include a environment file in the files. If the files aren't working in your computer or you want to build your own environment follow instructions below
   
-  ``2a.How to create an environment from an environment.yml file``
+  **2a.How to create an environment from an environment.yml file**
   
   Use the file by issuring:
   
@@ -36,7 +36,7 @@
  conda env list
  ```
   
-  ``2b. Set up a new Anaconda virtual environment``
+  **2b. Set up a new Anaconda virtual environment**
   
   We are going to use 3.0 version of python and newest pytorch and torchvision. Use the following code to create an environment named CNN for your project:
   

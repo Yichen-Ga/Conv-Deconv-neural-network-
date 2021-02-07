@@ -73,11 +73,18 @@
   
   # 3. Write a convolutional neural network depending on VGG16
   
-  **3a.Some Insights of VGG16 Structure**
+  **3a.Some Insights about VGG16 Structure**
   
   Generally speaking convolutional neural networks (CNN) is a class of deep neural networks to analysis visual imagary. CNN is commonly used to deal with relatively small dataset. For more detailed information about CNN check [wikipedia on CNNs](https://en.wikipedia.org/wiki/Convolutional_neural_network).
   
   A general summary about architechture is shown by Figure1 and Figure2:
+  
+  VGG16 is one of VGG net. VGGs are a newly developed convolutional neural network which has high accuracy in ImageNet (which is one the on the largest data-set available). The VGG16 is a most commanly used in VGGs which is much deeper consisting 16 weight layers. 
+  
+  A summary about architechture is shown by Figure3 and Figure4:
+  
+  **3b. Building VGG16 convolutional neural networks class**
+  In this section, we will build a VGG16 convolutional neural network depending on pretrained network in PyTorch. We will also write a function to load pretrained network and a forword to prepare parameters for deconvolution.
   
   
   

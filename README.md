@@ -15,7 +15,7 @@
   
   Anaconda is a software toolkit that creates virtual Python environments. We will use python libraries installed through Anaconda to do this project.
   
-  Download the Anaconda for Windows in this link (which direct to their website):https://www.anaconda.com/products/individual . Once it is donwloaded, execute the installer and follow the instructions to complete the installing process.
+  Download the [Anaconda for Windows](https://www.anaconda.com/products/individual) in this link (which direct to their website). Once it is donwloaded, execute the installer and follow the instructions to complete the installing process.
   
   # 2.Build up environment
   
@@ -72,6 +72,12 @@
   ```
   
   # 3. Write a convolutional neural network depending on VGG16
+  
+  **3a.Some Insights of VGG16 Structure**
+  
+  Generally speaking convolutional neural networks (CNN) is a class of deep neural networks to analysis visual imagary. CNN is commonly used to deal with relatively small dataset. For more detailed information about CNN check [wikipedia on CNNs](https://en.wikipedia.org/wiki/Convolutional_neural_network).
+  
+  A general summary about architechture is shown by Figure1 and Figure2:
   
   
   

@@ -73,8 +73,6 @@
   
   # 3. Write a convolutional neural network depending on VGG16
   
-  **3a.Some Insights about VGG16 Structure**
-  
   Generally speaking convolutional neural networks (CNN) is a class of deep neural networks to analysis visual imagary. CNN is commonly used to deal with relatively small dataset. For more detailed information about CNN check [wikipedia on CNNs](https://en.wikipedia.org/wiki/Convolutional_neural_network).
   
   A general summary about architechture is shown by Figure1 and Figure2:
@@ -83,7 +81,7 @@
   
   A summary about architechture is shown by Figure3 and Figure4:
   
-  **3b. Building VGG16 convolutional neural networks**
+  **3a. Building VGG16 convolutional neural networks**
   
   In this section, we will implement a VGG16 convolutional neural network depending on pretrained network in PyTorch. 
   
@@ -131,12 +129,12 @@ Since our goal is to do deconvolution, we do not need Classification in our vgg1
         )
   ```
   
-  Before __init__ function end we add this code to load pretrained modle in torch.nn.model (the function needed will be implemented in following code):
+  Before __init__ function end we need to add this code to load pretrained modle in torch.nn.model (the function needed will be implemented in following code):
   
   ```
   self.load_pretrained(trained_model)
   ```
-  **3c. Functions for VGG16 convolutional neural networks class**
+  **3b. Functions for VGG16 convolutional neural networks class**
   
   We will also write a function to load pretrained network and a forword to prepare parameters for deconvolution.
   
@@ -168,14 +166,73 @@ def forward(self,image):
 ```
   
   # 4. Write a deconvolutional neural network depending on VGG16
-  According to zeiler's method . Then, we can reconstruct the image depending on this structure.
-  
+  Zeiler's method maps intermedian features back to input pixel speces through a reverse path. According to it, we will need the Unpooling (which place the recorded variables from each pooling region to appropriate locations), the Rectification (which is just same as conv one, a relu non-linearity), and Filtering (which uses same filters in deconv process but with flipping each filter vertically and horizontally) to build that recerse path. Then, we can reconstruct the image depending on this structure.
   
   **4a. Implement a reversed conv2d**
   
+  ```
+  def __init__(self,trained_layer,in_channels,out_channels,kernel_size,stride=1,padding=0,output_padding=0,groups=1,bias=True,dilation=1,
+                 padding_mode='zeros'):
+        super(ReverseConv2d, self).__init__()
+        self.transpose2d = nn.Conv2d(in_channels,out_channels,kernel_size,stride=stride,padding=padding,dilation=dilation,bias=False,groups=groups,padding_mode=padding_mode)
+        
+        self.transpose2d.weight.data = trained_layer.weight.data.permute(1, 0, 3, 2)
+        self.bias = trained_layer.bias.data
+        self.use_bias = bias
+  ```
+  
+  
+  
+  ```
+  def forward(self,deconv_input):
+        print(self.transpose2d.weight.data.shape)
+        if (self.use_bias):
+            return self.transpose2d(deconv_input-self.bias[None,:,None,None])
+        return self.transpose2d(deconv_input)
+  ```
   
   **4b. Building VGG16 deconvolutional neural networks**
   
+  
+  ```
+  self.deconv_layers = nn.Sequential(
+            nn.MaxUnpool2d(kernel_size=2,stride=2),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[28],512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[26],512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[24],512,512,3,padding = 1),
+            
+            nn.MaxUnpool2d(kernel_size=2,stride=2),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[21],512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[19],512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[17],512,256,3,padding = 1),
+            
+            nn.MaxUnpool2d(kernel_size=2,stride=2),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[14],256,256,3,padding = 1),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[12],256,256,3,padding = 1),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[10],256,128,3,padding = 1),
+            
+            nn.MaxUnpool2d(kernel_size=2,stride=2),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[7],128,128,3,padding = 1),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[5],128,64,3,padding = 1),
+            
+            nn.MaxUnpool2d(kernel_size=2,stride=2),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[2],64,64,3,padding = 1),
+            nn.ReLU(inplace=True),
+            RevConv2d.ReverseConv2d(trained_model.conv_layers[0],64,3,3,padding = 1),
+        )
+  ```
   
   **4c. Implement a reconstruction function for VGG16 deconvolution**
  

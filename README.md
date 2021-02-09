@@ -87,9 +87,9 @@
   
   In this section, we will implement a VGG16 convolutional neural network depending on pretrained network in PyTorch. 
   
-      Since our goal is to do deconvolution, we do not need classification layer in our vgg16 structure. Therefoer, our Vgg16 contains 5 sections of layers, where first two layers use 2 conv&relu in each and last three layers use 3 layers use 3 conv&relu. There are totally 30 layers in our structure.
+Since our goal is to do deconvolution, we do not need Classification in our vgg16 structure. Therefoer, our Vgg16 only have Feature Learning part which contains 5 sections of layers, where first two layers use 2 conv&relu in each and last three layers use 3 layers use 3 conv&relu according to vgg16 structure. There are totally 30 layers in our structure.
       
-  Vgg16 is implemented as a sequence in __init__ function:
+  Vgg16 is implemented as a sequence in __init__ function. (It is important to know which layers are pooling layer, in other word, end of a section of layers, for writing deconvolution in the next part):
   
   ```
   self.conv_layers = nn.Sequential(
@@ -168,6 +168,8 @@ def forward(self,image):
 ```
   
   # 4. Write a deconvolutional neural network depending on VGG16
+  According to zeiler's method . Then, we can reconstruct the image depending on this structure.
+  
   
   **4a. Implement a reversed conv2d**
   
@@ -175,7 +177,7 @@ def forward(self,image):
   **4b. Building VGG16 deconvolutional neural networks**
   
   
-  **4c. Implement a reconstruct function for VGG16 deconvolution**
+  **4c. Implement a reconstruction function for VGG16 deconvolution**
  
   
   

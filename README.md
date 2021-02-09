@@ -83,10 +83,100 @@
   
   A summary about architechture is shown by Figure3 and Figure4:
   
-  **3b. Building VGG16 convolutional neural networks class**
-  In this section, we will build a VGG16 convolutional neural network depending on pretrained network in PyTorch. We will also write a function to load pretrained network and a forword to prepare parameters for deconvolution.
+  **3b. Building VGG16 convolutional neural networks**
+  
+  In this section, we will implement a VGG16 convolutional neural network depending on pretrained network in PyTorch. 
+  
+      Since our goal is to do deconvolution, we do not need classification layer in our vgg16 structure. Therefoer, our Vgg16 contains 5 sections of layers, where first two layers use 2 conv&relu in each and last three layers use 3 layers use 3 conv&relu. There are totally 30 layers in our structure.
+      
+  Vgg16 is implemented as a sequence in __init__ function:
+  
+  ```
+  self.conv_layers = nn.Sequential(
+            nn.Conv2d(3,64,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(64,64,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2,stride=2,return_indices=True),#4
+            
+            nn.Conv2d(64,128,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(128,128,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2,stride=2,return_indices=True),#9
+            
+            nn.Conv2d(128,256,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256,256,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256,256,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2,stride=2,return_indices=True),#16
+            
+            nn.Conv2d(256,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2,stride=2,return_indices=True), #23
+            
+            nn.Conv2d(512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512,512,3,padding = 1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2,stride=2,return_indices=True), #30
+        )
+  ```
+  
+  Before __init__ function end we add this code to load pretrained modle in torch.nn.model (the function needed will be implemented in following code):
+  
+  ```
+  self.load_pretrained(trained_model)
+  ```
+  **3c. Functions for VGG16 convolutional neural networks class**
+  
+  We will also write a function to load pretrained network and a forword to prepare parameters for deconvolution.
+  
+  First we need to build a load_pretrained function which takes the trained_model and apply trained data on our VGG16. (Since we are only here try to do the deconvolution, training a vgg16 is not our main task.):
+  
+  ```
+  def load_pretrained(self, trained_model):
+        for i, layer in enumerate(trained_model.features):
+            if isinstance(layer,nn.Conv2d):
+                self.conv_layers[i].weight.data = layer.weight.data
+                self.conv_layers[i].bias.data = layer.bias.data
+  ```
+  
+Then, in order to do the deconvolution we need a forward function for this class to generate intermidiate_features and maxpool_indices for each section of layers after this vgg16 processed an image:
+
+```
+def forward(self,image):
+        maxpool_indices = {}
+        intermidiate_features = []
+        for i,layer in enumerate(self.conv_layers):
+            if isinstance(layer,nn.MaxPool2d):
+                image, indices = layer(image)
+                maxpool_indices[i] = indices
+                intermidiate_features.append(image)
+            else:
+                image = layer(image)
+                intermidiate_features.append(image)
+        return intermidiate_features,maxpool_indices
+```
+  
+  # 4. Write a deconvolutional neural network depending on VGG16
+  
+  **4a. Implement a reversed conv2d**
   
   
+  **4b. Building VGG16 deconvolutional neural networks**
+  
+  
+  **4c. Implement a reconstruct function for VGG16 deconvolution**
+ 
   
   
   

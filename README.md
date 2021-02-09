@@ -148,7 +148,7 @@ Since our goal is to do deconvolution, we do not need Classification in our vgg1
                 self.conv_layers[i].bias.data = layer.bias.data
   ```
   
-Then, in order to do the deconvolution we need a forward function for this class to generate intermidiate_features and maxpool_indices for each section of layers after this vgg16 processed an image:
+Then, in order to do the deconvolution we need a forward function for this class to generate intermidiate_features and maxpool_indices for each section of layers after this vgg16 processed an image (maxpool_indices recorded variables from each pooling region):
 
 ```
 def forward(self,image):
@@ -168,7 +168,12 @@ def forward(self,image):
   # 4. Write a deconvolutional neural network depending on VGG16
   Zeiler's method maps intermedian features back to input pixel speces through a reverse path. According to it, we will need the Unpooling (which place the recorded variables from each pooling region to appropriate locations), the Rectification (which is just same as conv one, a relu non-linearity), and Filtering (which uses same filters in deconv process but with flipping each filter vertically and horizontally) to build that recerse path. Then, we can reconstruct the image depending on this structure.
   
+  Figure_5 from [1] explaining the deconvolution process:
+  
+  
   **4a. Implement a reversed conv2d**
+  
+  
   
   ```
   def __init__(self,trained_layer,in_channels,out_channels,kernel_size,stride=1,padding=0,output_padding=0,groups=1,bias=True,dilation=1,
@@ -236,6 +241,22 @@ def forward(self,image):
   
   **4c. Implement a reconstruction function for VGG16 deconvolution**
  
+ We use the intermidiate_features and the max_pool derived from forward function from conv class to build all the way back to reconstruct the input image. The maxpool_indices are used to place the recorded variables from each pooling region to appropriate locations.
+ 
+ ```
+ def reconstruct(self,intermidiate_features,maxpool_indices,start_index):
+        reconstructed_feature = intermidiate_features[start_index]
+        deconv_start_index = len(self.deconv_layers) - start_index - 1
+        for i in range(deconv_start_index, len(self.deconv_layers)):
+            print(reconstructed_feature.shape,i)
+            if isinstance (self.deconv_layers[i], nn.MaxUnpool2d):
+                current_layer_index = len(self.deconv_layers) - i - 1
+                current_indices = maxpool_indices[current_layer_index]
+                reconstructed_feature = self.deconv_layers[i](reconstructed_feature, current_indices)
+            else:
+                reconstructed_feature = self.deconv_layers[i](reconstructed_feature)
+        return reconstructed_feature
+ ```
   
   
   

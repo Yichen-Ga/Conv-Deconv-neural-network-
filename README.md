@@ -81,7 +81,7 @@
   
   A summary about architechture is shown by Figure3 and Figure4:
   
-  **3a. Building VGG16 convolutional neural networks**
+  **3a. Building VGG16 convolutional neural network**
   
   In this section, we will implement a VGG16 convolutional neural network depending on pretrained network in PyTorch. 
   
@@ -173,7 +173,7 @@ def forward(self,image):
   
   **4a. Implement a reversed conv2d**
   
-  
+  At this step, we construct our reverseconv2d very similar to conv2d, except we need to flip each filter vertically and horizontally. So, we just copy each data of parameters from conv2d, but do the flipping in treanpose2d.weight.data.
   
   ```
   def __init__(self,trained_layer,in_channels,out_channels,kernel_size,stride=1,padding=0,output_padding=0,groups=1,bias=True,dilation=1,
@@ -185,8 +185,8 @@ def forward(self,image):
         self.bias = trained_layer.bias.data
         self.use_bias = bias
   ```
-  
-  
+ 
+  This forward function just simplly return the intermidiate feature which is processed from previous feature to next layer (Since each layer is connected):
   
   ```
   def forward(self,deconv_input):
@@ -196,8 +196,9 @@ def forward(self,image):
         return self.transpose2d(deconv_input)
   ```
   
-  **4b. Building VGG16 deconvolutional neural networks**
+  **4b. Building VGG16 deconvolutional neural network**
   
+  The structure of a VGG16 deconvolutional neural network is processing image in a back path way. Now, we have first three layers use 3 conv&relu in each section of layers and last two layers use 2 conv&relu, according to vgg16 structure backword. There are totally 30 layers in our structure. According to the __init__ function we write in reversed conv2d class, now we need to alligne
   
   ```
   self.deconv_layers = nn.Sequential(

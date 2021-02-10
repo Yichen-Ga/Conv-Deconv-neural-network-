@@ -198,7 +198,7 @@ def forward(self,image):
   
   **4b. Building VGG16 deconvolutional neural network**
   
-  The structure of a VGG16 deconvolutional neural network is processing image in a back path way. Now, we have first three layers use 3 conv&relu in each section of layers and last two layers use 2 conv&relu, according to vgg16 structure backword. There are totally 30 layers in our structure. According to the __init__ function we write in reversed conv2d class, now we need to alligne
+  The structure of a VGG16 deconvolutional neural network is processing image in a back path way. Now, we have first three layers use 3 conv&relu in each section of layers and last two layers use 2 conv&relu, according to vgg16 structure backword. There are totally 30 layers in our structure. According to the __init__ function we write in reversed conv2d class, now we need to align each RevConv2d in deconv_layers to each conv_layers respectively and correspodingly.
   
   ```
   self.deconv_layers = nn.Sequential(
@@ -242,7 +242,7 @@ def forward(self,image):
   
   **4c. Implement a reconstruction function for VGG16 deconvolution**
  
- We use the intermidiate_features and the max_pool derived from forward function from conv class to build all the way back to reconstruct the input image. The maxpool_indices are used to place the recorded variables from each pooling region to appropriate locations.
+ We use the intermidiate_features and the max_pool derived from forward function from conv class to build all the way back to reconstruct the input image. The maxpool_indices are used to place the recorded variables from each pooling region to appropriate locations. It is important to set the start_index to decide which layer you want to start to reconstruct, which means you are going ignore the features before that layer.
  
  ```
  def reconstruct(self,intermidiate_features,maxpool_indices,start_index):
@@ -258,6 +258,27 @@ def forward(self,image):
                 reconstructed_feature = self.deconv_layers[i](reconstructed_feature)
         return reconstructed_feature
  ```
+  
+  # 5. Try use main.py file to conv-deconv an image.
+  
+  Now, we just need to compile our code together into one file to use it processing a few images to test our code performance.
+  
+  Below is the part where we compile conv and deconv together to reconstruct image (Operations are commented in main.py check for further detail):
+  
+  ```
+  #operating on vgg16
+conv_VGG16_model = conv.vgg16(pretrained_vgg16_model)
+intermidiate_features,maxpool_indices = conv_VGG16_model.forward(img)
+print('vgg16 loaded')
+#Change start_index here to adjust the model to get a clear image
+input_start = input('Enter start_index:')
+start_index = 3
+deconv_VGG16_model = deconv.deconvolve_vgg16(conv_VGG16_model)
+result_img = deconv_VGG16_model.reconstruct(intermidiate_features,maxpool_indices,start_index)
+print('model reconstructed')
+  ```
+  Now we input an image (77394-gr.jpeg) to main.py:
+  
   
   
   

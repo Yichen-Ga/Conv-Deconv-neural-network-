@@ -272,14 +272,42 @@ intermidiate_features,maxpool_indices = conv_VGG16_model.forward(img)
 print('vgg16 loaded')
 #Change start_index here to adjust the model to get a clear image
 input_start = input('Enter start_index:')
-start_index = 3
+start_index = input_start; #recommanded use 3 in first time.
 deconv_VGG16_model = deconv.deconvolve_vgg16(conv_VGG16_model)
 result_img = deconv_VGG16_model.reconstruct(intermidiate_features,maxpool_indices,start_index)
 print('model reconstructed')
   ```
-  Now we input an image (77394-gr.jpeg) to main.py:
   
+  Now we input an image (77394-gr.jpeg) to main.py and set its stat_index as 3:
   
+  ```
+  (CNN) D:\CNN\conv deconv neural net>python main.py
+Enter path of the image:D:\CNN\Dataset\77394-gr.jpeg
+image loaded
+vgg16 loaded
+Enter start_index:3
+torch.Size([1, 64, 224, 224]) 27
+torch.Size([1, 64, 224, 224]) 28
+torch.Size([64, 64, 3, 3])
+torch.Size([1, 64, 224, 224]) 29
+torch.Size([1, 64, 224, 224]) 30
+torch.Size([3, 64, 3, 3])
+model reconstructed
+  ```
+  
+  Then we select the path to save our reconstructed image (include its name):
+  
+  ```
+  Enter the path to save the image(including its name):D:\CNN\Dataset\reconstructed_77394.jpeg
+(224, 224, 3)
+Successfully completed
+  ```
+  
+  Now we go to our path we will find our reconstructed image (compare to original):
+  
+  We can try different start index and compare them to visualize CNN performance layer by layer:
+  
+  And we can use different image input to our program:
   
   
   

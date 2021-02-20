@@ -77,6 +77,9 @@
   
   A general summary about architechture is shown by Figure1 and Figure2:
   
+  ![Figure1](/images/Figure1.jpg)  
+  ![Figure2](/images/Figure2.jpg)
+  
   VGG16 is one of VGG net. VGGs are a newly developed convolutional neural network which has high accuracy in ImageNet (which is one the on the largest data-set available). The VGG16 is a most commanly used in VGGs which is much deeper consisting 16 weight layers. 
   
   A summary about architechture is shown by Figure3 and Figure4:

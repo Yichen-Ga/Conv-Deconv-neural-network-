@@ -377,7 +377,7 @@ Successfully completed
   ![Figure4_3](Images/849970-gr_start8.jpg)  
   reconstructed with start_index 8
   
-#Reference
+# Reference
 
 [1] Zeiler, Matthew D. and R. Fergus. "Visualizing and Understanding Convolutional Networks." ECCV (2014).
 

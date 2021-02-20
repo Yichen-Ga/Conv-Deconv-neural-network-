@@ -86,10 +86,10 @@
   VGG16 is one of VGG net. VGGs are a newly developed convolutional neural network which has high accuracy in ImageNet (which is one the on the largest data-set available). The VGG16 is a most commanly used in VGGs which is much deeper consisting 16 weight layers. 
   
   A summary about architechture is shown by Figure3 and Figure4:
-  ![Figure3](Images/Figure3.jpg)  
+  ![Figure3](Images/vgg16-neural-network_VGG16 Architecture(Figure3).jpg)  
   [Figure3](https://neurohive.io/en/popular-networks/vgg16/)
   
-  ![Figure4](Images/Figure4.jpg)  
+  ![Figure4](Images/vgg16(Figure4).png)  
   [Figure4](https://neurohive.io/en/popular-networks/vgg16/)
   
   **3a. Building VGG16 convolutional neural network**
@@ -180,7 +180,7 @@ def forward(self,image):
   Zeiler's method maps intermedian features back to input pixel speces through a reverse path. According to it, we will need the Unpooling (which place the recorded variables from each pooling region to appropriate locations), the Rectification (which is just same as conv one, a relu non-linearity), and Filtering (which uses same filters in deconv process but with flipping each filter vertically and horizontally) to build that recerse path. Then, we can reconstruct the image depending on this structure.
   
   Figure_5 from [1] explaining the deconvolution process:
-  ![Figure5](Images/Figure5.jpg)  
+  ![Figure5](Images/Figure_5.PNG)  
   Figure5
   
   
@@ -317,6 +317,7 @@ Successfully completed
   ```
   
   Now we go to our path we will find our reconstructed image (compare to original):
+  
   ![Figure1_1](Dataset/77394-gr.jpeg)  
   original one
   
@@ -324,13 +325,13 @@ Successfully completed
   reconstructed with start_index 3
   
   We can try different start index and compare them to visualize CNN performance layer by layer:
-  ![Figure1_3](Dataset/reconstructed_77394_start1.jpeg)  
+  ![Figure1_3](Images/reconstructed_77394_start1.jpeg)  
   reconstructed with start_index 1
   
   ![Figure1_4](Images/reconstructed_77394_start5.jpeg)  
   reconstructed with start_index 5
   
-  ![Figure1_3](Dataset/reconstructed_77394_start8.jpeg)  
+  ![Figure1_3](Images/reconstructed_77394_start8.jpeg)  
   reconstructed with start_index 8
   
   ![Figure1_4](Images/reconstructed_77394_start10.jpeg)  
@@ -343,13 +344,13 @@ Successfully completed
   
   First one:
   
-  ![Figure1_3](Dataset/206144-kg.jpeg)  
+  ![Figure1_3](Images/206144-kg.jpg)  
   original one
   
-  ![Figure1_4](Images/206144-kg_start3.jpeg)  
+  ![Figure1_4](Images/206144-kg_start3.jpg)  
   reconstructed with start_index 3
   
-  ![Figure1_3](Dataset/206144-kg_start8.jpeg)  
+  ![Figure1_3](Images/206144-kg_start8.jpg)  
   reconstructed with start_index 8
   
   Second one:
@@ -357,21 +358,21 @@ Successfully completed
   ![Figure1_4](Images/466166-kg.jpeg)  
   original one
   
-  ![Figure1_4](Images/466166-kg_start3.jpeg)  
+  ![Figure1_4](Images/466166-kg_start3.jpg)  
   reconstructed with start_index 3
   
-  ![Figure1_3](Dataset/466166-kg_start8.jpeg)  
+  ![Figure1_3](Images/466166-kg_start8.jpg)  
   reconstructed with start_index 8
   
   Third one:
   
-  ![Figure1_4](Images/849970-gr.jpeg)  
+  ![Figure1_4](Images/849970-gr.jpg)  
   original one
   
-  ![Figure1_4](Images/849970-gr_start3.jpeg)  
+  ![Figure1_4](Images/849970-gr_start3.jpg)  
   reconstructed with start_index 3
   
-  ![Figure1_3](Dataset/849970-gr_start8.jpeg)  
+  ![Figure1_3](Images/849970-gr_start8.jpg)  
   reconstructed with start_index 8
   
 

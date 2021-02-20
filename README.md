@@ -86,6 +86,7 @@
   VGG16 is one of VGG net. VGGs are a newly developed convolutional neural network which has high accuracy in ImageNet (which is one the on the largest data-set available). The VGG16 is a most commanly used in VGGs which is much deeper consisting 16 weight layers. 
   
   A summary about architechture is shown by Figure3 and Figure4:
+  
   ![Figure3](Images/vgg16-neural-network_VGG16 Architecture(Figure3).jpg)  
   [Figure3](https://neurohive.io/en/popular-networks/vgg16/)
   
@@ -331,48 +332,48 @@ Successfully completed
   ![Figure1_4](Images/reconstructed_77394_start5.jpeg)  
   reconstructed with start_index 5
   
-  ![Figure1_3](Images/reconstructed_77394_start8.jpeg)  
+  ![Figure1_5](Images/reconstructed_77394_start8.jpeg)  
   reconstructed with start_index 8
   
-  ![Figure1_4](Images/reconstructed_77394_start10.jpeg)  
+  ![Figure1_6](Images/reconstructed_77394_start10.jpeg)  
   reconstructed with start_index 10
   
-  ![Figure1_4](Images/reconstructed_77394_start13.jpeg)  
+  ![Figure1_7](Images/reconstructed_77394_start13.jpeg)  
   reconstructed with start_index 13
   
   And we can use different image input to our program:
   
   First one:
   
-  ![Figure1_3](Images/206144-kg.jpg)  
+  ![Figure2_1](Dataset/206144-kg.jpg)  
   original one
   
-  ![Figure1_4](Images/206144-kg_start3.jpg)  
+  ![Figure2_2](Images/206144-kg_start3.jpg)  
   reconstructed with start_index 3
   
-  ![Figure1_3](Images/206144-kg_start8.jpg)  
+  ![Figure2_3](Images/206144-kg_start8.jpg)  
   reconstructed with start_index 8
   
   Second one:
   
-  ![Figure1_4](Images/466166-kg.jpeg)  
+  ![Figure3_1](Dataset/466166-kg.jpeg)  
   original one
   
-  ![Figure1_4](Images/466166-kg_start3.jpg)  
+  ![Figure3_2](Images/466166-kg_start3.jpg)  
   reconstructed with start_index 3
   
-  ![Figure1_3](Images/466166-kg_start8.jpg)  
+  ![Figure3_3](Images/466166-kg_start8.jpg)  
   reconstructed with start_index 8
   
   Third one:
   
-  ![Figure1_4](Images/849970-gr.jpg)  
+  ![Figure4_1](Dataset/849970-gr.jpg)  
   original one
   
-  ![Figure1_4](Images/849970-gr_start3.jpg)  
+  ![Figure4_2](Images/849970-gr_start3.jpg)  
   reconstructed with start_index 3
   
-  ![Figure1_3](Images/849970-gr_start8.jpg)  
+  ![Figure4_3](Images/849970-gr_start8.jpg)  
   reconstructed with start_index 8
   
 

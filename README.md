@@ -357,7 +357,7 @@ Successfully completed
   
   Second one:
   
-  ![Figure3_1](Dataset/466166-kg.jpeg)  
+  ![Figure3_1](Dataset/466166-kg.jpg)  
   original one
   
   ![Figure3_2](Images/466166-kg_start3.jpg)  

@@ -87,7 +87,7 @@
   
   A summary about architechture is shown by Figure3 and Figure4:
   
-  ![Figure3](Images/vgg16-neural-network_VGG16 Architecture(Figure3).jpg)  
+  ![Figure3](Images/vgg16-neural-network_VGG16_Architecture(Figure3).jpg)  
   [Figure3](https://neurohive.io/en/popular-networks/vgg16/)
   
   ![Figure4](Images/vgg16(Figure4).png)  
@@ -377,6 +377,11 @@ Successfully completed
   ![Figure4_3](Images/849970-gr_start8.jpg)  
   reconstructed with start_index 8
   
+#Reference
 
+[1] Zeiler, Matthew D. and R. Fergus. "Visualizing and Understanding Convolutional Networks." ECCV (2014).
+[2] https://en.wikipedia.org/wiki/CNN
+[3] http://cs231n.github.io/convolutional-networks/
+[4] https://neurohive.io/en/popular-networks/vgg16/
   
   

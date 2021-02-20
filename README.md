@@ -326,6 +326,7 @@ Successfully completed
   reconstructed with start_index 3
   
   We can try different start index and compare them to visualize CNN performance layer by layer:
+  
   ![Figure1_3](Images/reconstructed_77394_start1.jpeg)  
   reconstructed with start_index 1
   

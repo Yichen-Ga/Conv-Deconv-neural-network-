@@ -77,12 +77,18 @@
   
   A general summary about architechture is shown by Figure1 and Figure2:
   
-  ![Figure1](/images/Figure1.jpg)  
-  ![Figure2](/images/Figure2.jpg)
+  ![Figure1](Conv-Deconv-neural-network-/images/Figure1.jpg)  
+  [Figure1](http://cs231n.github.io/convolutional-networks/)
+  ![Figure2](Conv-Deconv-neural-network-/images/Figure2.jpg)
+  [Figure2](http://cs231n.github.io/convolutional-networks/)
   
   VGG16 is one of VGG net. VGGs are a newly developed convolutional neural network which has high accuracy in ImageNet (which is one the on the largest data-set available). The VGG16 is a most commanly used in VGGs which is much deeper consisting 16 weight layers. 
   
   A summary about architechture is shown by Figure3 and Figure4:
+  ![Figure3](Conv-Deconv-neural-network-/images/Figure3.jpg)  
+  [Figure3](https://neurohive.io/en/popular-networks/vgg16/)
+  ![Figure4](Conv-Deconv-neural-network-/images/Figure4.jpg)  
+  [Figure4](https://neurohive.io/en/popular-networks/vgg16/)
   
   **3a. Building VGG16 convolutional neural network**
   
@@ -172,6 +178,8 @@ def forward(self,image):
   Zeiler's method maps intermedian features back to input pixel speces through a reverse path. According to it, we will need the Unpooling (which place the recorded variables from each pooling region to appropriate locations), the Rectification (which is just same as conv one, a relu non-linearity), and Filtering (which uses same filters in deconv process but with flipping each filter vertically and horizontally) to build that recerse path. Then, we can reconstruct the image depending on this structure.
   
   Figure_5 from [1] explaining the deconvolution process:
+  ![Figure3](Conv-Deconv-neural-network-/images/Figure3.jpg)  
+  Figure5
   
   
   **4a. Implement a reversed conv2d**

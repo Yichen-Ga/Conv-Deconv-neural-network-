@@ -77,8 +77,9 @@
   
   A general summary about architechture is shown by Figure1 and Figure2:
   
-  ![Figure1](Conv-Deconv-neural-network-/Images/Figure1.jpg)  
+  ![Figure1](Images/Figure1.jpg)  
   [Figure1](http://cs231n.github.io/convolutional-networks/)
+  
   ![Figure2](Conv-Deconv-neural-network-/Images/Figure2.jpg)
   [Figure2](http://cs231n.github.io/convolutional-networks/)
   
@@ -178,7 +179,7 @@ def forward(self,image):
   Zeiler's method maps intermedian features back to input pixel speces through a reverse path. According to it, we will need the Unpooling (which place the recorded variables from each pooling region to appropriate locations), the Rectification (which is just same as conv one, a relu non-linearity), and Filtering (which uses same filters in deconv process but with flipping each filter vertically and horizontally) to build that recerse path. Then, we can reconstruct the image depending on this structure.
   
   Figure_5 from [1] explaining the deconvolution process:
-  ![Figure3](Conv-Deconv-neural-network-/Images/Figure3.jpg)  
+  ![Figure5](Conv-Deconv-neural-network-/Images/Figure5.jpg)  
   Figure5
   
   

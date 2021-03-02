@@ -1,13 +1,13 @@
 # Conv-Deconv-neural-network-
 
   # Introduction
- This project implements zeiler's method to visualize deconvolutional neural network using Pytorch [1]. A convolutional neural network is also implemented to help to test the result. A pretrained VGG16 model and a few pictures was been used for the networks. I wish to demonstrate an example of writing multiple neural networks using Pytorch to vision people, and a practice of using theories of CNN in real coding. 
+ This project implements Zeiler's method to visualize deconvolutional neural networks using Pytorch [1]. A convolutional neural network is also implemented to help to test the result. A pretrained VGG16 model and a few pictures were been used for the networks. I wish to demonstrate an example of writing multiple neural networks using Pytorch to vision people and practice using theories of CNN in real coding. 
  
  Although this tutorial only shows how to do Conv/ Deconv neural network in VGG16. People can certainly look through the process and modify the code to apply a new type of model.
  I will also include some instructions to help people modify to apply their model.
 
-  Note: This project is based on Windows operating system. The code itself may noet be effected much, but errors caused by environment may happen in a different operating system.
-
+  Note: This project is based on Windows operating system. The code itself may not be affected much, but errors caused by the environment may happen in a different operating system.
+  
 [1] Zeiler, Matthew D. and R. Fergus. "Visualizing and Understanding Convolutional Networks." ECCV (2014).
 
   # Steps
@@ -15,11 +15,11 @@
   
   Anaconda is a software toolkit that creates virtual Python environments. We will use python libraries installed through Anaconda to do this project.
   
-  Download the [Anaconda for Windows](https://www.anaconda.com/products/individual) in this link (which direct to their website). Once it is donwloaded, execute the installer and follow the instructions to complete the installing process.
+  Download the [Anaconda for Windows](https://www.anaconda.com/products/individual) in this link (which direct to their website). Once it is downloaded, execute the installer and follow the instructions to complete the installing process.
   
   # 2.Build up environment
   
-  I will include a environment file in the files. If the files aren't working in your computer or you want to build your own environment follow instructions below
+  I will include an environment file in the files. If the files aren't working on your computer or you want to build your environment follow the instructions below
   
   **2a.How to create an environment from an environment.yml file**
   
@@ -73,7 +73,7 @@
   
   # 3. Write a convolutional neural network depending on VGG16
   
-  Generally speaking convolutional neural networks (CNN) is a class of deep neural networks to analysis visual imagary. CNN is commonly used to deal with relatively small dataset. For more detailed information about CNN check [wikipedia on CNNs](https://en.wikipedia.org/wiki/Convolutional_neural_network).
+  Generally speaking convolutional neural networks (CNN) is a class of deep neural networks to analyze visual imagery. CNN is commonly used to deal with relatively small datasets. For more detailed information about CNN check [wikipedia on CNNs](https://en.wikipedia.org/wiki/Convolutional_neural_network).
   
   A general summary about architechture is shown by Figure1 and Figure2:
   
@@ -83,7 +83,7 @@
   ![Figure2](Images/Figure2.jpg)
   [Figure2](http://cs231n.github.io/convolutional-networks/)
   
-  VGG16 is one of VGG net. VGGs are a newly developed convolutional neural network which has high accuracy in ImageNet (which is one the on the largest data-set available). The VGG16 is a most commanly used in VGGs which is much deeper consisting 16 weight layers. 
+  VGG16 is one of VGG net. VGGs are a newly developed convolutional neural network that has high accuracy in ImageNet (which is one of the largest data-set available). The VGG16 is the most commonly used in VGGs which is much deeper consisting of 16 weight layers. 
   
   A summary about architechture is shown by Figure3 and Figure4:
   
@@ -97,9 +97,9 @@
   
   In this section, we will implement a VGG16 convolutional neural network depending on pretrained network in PyTorch. 
   
-Since our goal is to do deconvolution, we do not need Classification in our vgg16 structure. Therefoer, our Vgg16 only have Feature Learning part which contains 5 sections of layers, where first two layers use 2 conv&relu in each and last three layers use 3 layers use 3 conv&relu according to vgg16 structure. There are totally 30 layers in our structure.
+Since our goal is to do deconvolution, we do not need Classification in our vgg16 structure. Therefore, our Vgg16 only has the Feature Learning part which contains 5 sections of layers, where the first two layers use 2 conv&relu in each and the last three layers use 3 conv&relu according to vgg16 structure. There are a total of 30 layers in our structure.
       
-  Vgg16 is implemented as a sequence in __init__ function. (It is important to know which layers are pooling layer, in other word, end of a section of layers, for writing deconvolution in the next part):
+  Vgg16 is implemented as a sequence in __init__ function. (It is important to know which layers are pooling layer, in another word, end of a section of layers, for writing deconvolution in the next part):
   
   ```
   self.conv_layers = nn.Sequential(
@@ -148,9 +148,9 @@ Since our goal is to do deconvolution, we do not need Classification in our vgg1
   ```
   **3b. Functions for VGG16 convolutional neural networks class**
   
-  We will also write a function to load pretrained network and a forword to prepare parameters for deconvolution.
+  We will also write a function to load pretrained network and a forward to prepare parameters for deconvolution.
   
-  First we need to build a load_pretrained function which takes the trained_model and apply trained data on our VGG16. (Since we are only here try to do the deconvolution, training a vgg16 is not our main task.):
+  First, we need to build a load_pretrained function that takes the trained_model and applies trained data on our VGG16. (Since we are only here to try to do the deconvolution, training a vgg16 is not our main task.):
   
   ```
   def load_pretrained(self, trained_model):
@@ -160,7 +160,7 @@ Since our goal is to do deconvolution, we do not need Classification in our vgg1
                 self.conv_layers[i].bias.data = layer.bias.data
   ```
   
-Then, in order to do the deconvolution we need a forward function for this class to generate intermidiate_features and maxpool_indices for each section of layers after this vgg16 processed an image (maxpool_indices recorded variables from each pooling region):
+Then, to do the deconvolution we need a forward function for this class to generate intermidiate_features and maxpool_indices for each section of layers after this vgg16 processed an image (maxpool_indices recorded variables from each pooling region):
 
 ```
 def forward(self,image):
@@ -178,7 +178,7 @@ def forward(self,image):
 ```
   
   # 4. Write a deconvolutional neural network depending on VGG16
-  Zeiler's method maps intermedian features back to input pixel speces through a reverse path. According to it, we will need the Unpooling (which place the recorded variables from each pooling region to appropriate locations), the Rectification (which is just same as conv one, a relu non-linearity), and Filtering (which uses same filters in deconv process but with flipping each filter vertically and horizontally) to build that recerse path. Then, we can reconstruct the image depending on this structure.
+  Zeiler's method maps intermediate features back to input pixel spaces through a reverse path. According to it, we will need the Unpooling (which place the recorded variables from each pooling region to appropriate locations), the Rectification (which is just the same as conv one, a relu non-linearity), and Filtering (which uses the same filters in deconv process but with flipping each filter vertically and horizontally) to build that reverse path. Then, we can reconstruct the image depending on this structure.
   
   Figure_5 from [1] explaining the deconvolution process:
   ![Figure5](Images/Figure_5.PNG)  
@@ -200,7 +200,7 @@ def forward(self,image):
         self.use_bias = bias
   ```
  
-  This forward function just simplly return the intermidiate feature which is processed from previous feature to next layer (Since each layer is connected):
+  This forward function just simply returns the intermediate feature which is processed from the previous feature to the next layer (Since each layer is connected):
   
   ```
   def forward(self,deconv_input):
@@ -212,7 +212,7 @@ def forward(self,image):
   
   **4b. Building VGG16 deconvolutional neural network**
   
-  The structure of a VGG16 deconvolutional neural network is processing image in a back path way. Now, we have first three layers use 3 conv&relu in each section of layers and last two layers use 2 conv&relu, according to vgg16 structure backword. There are totally 30 layers in our structure. According to the __init__ function we write in reversed conv2d class, now we need to align each RevConv2d in deconv_layers to each conv_layers respectively and correspodingly.
+  The structure of a VGG16 deconvolutional neural network is processing images in a back pathway. Now, we have the first three layers use 3 conv&relu in each section of layers and the last two layers use 2 conv&relu, according to vgg16 structure backword. There are a total of 30 layers in our structure. According to the __init__ function we write in reversed conv2d class, now we need to align each RevConv2d in deconv_layers to each conv_layers respectively and correspondingly.
   
   ```
   self.deconv_layers = nn.Sequential(
@@ -256,7 +256,7 @@ def forward(self,image):
   
   **4c. Implement a reconstruction function for VGG16 deconvolution**
  
- We use the intermidiate_features and the max_pool derived from forward function from conv class to build all the way back to reconstruct the input image. The maxpool_indices are used to place the recorded variables from each pooling region to appropriate locations. It is important to set the start_index to decide which layer you want to start to reconstruct, which means you are going ignore the features before that layer.
+ We use the intermidiate_features and the max_pool derived from the forward function from conv class to build back to reconstruct the input image. The maxpool_indices are used to place the recorded variables from each pooling region to appropriate locations. It is important to set the start_index to decide which layer you want to start to reconstruct, which means you are going to ignore the features before that layer.
  
  ```
  def reconstruct(self,intermidiate_features,maxpool_indices,start_index):
@@ -277,7 +277,7 @@ def forward(self,image):
   
   Now, we just need to compile our code together into one file to use it processing a few images to test our code performance.
   
-  Below is the part where we compile conv and deconv together to reconstruct image (Operations are commented in main.py check for further detail):
+  Below is the part where we compile conv and deconv together to reconstruct the image (Operations are commented in main.py check for further detail):
   
   ```
   #operating on vgg16
@@ -381,10 +381,10 @@ Successfully completed
 
 [1] Zeiler, Matthew D. and R. Fergus. "Visualizing and Understanding Convolutional Networks." ECCV (2014).
 
-[2] https://en.wikipedia.org/wiki/CNN
+[2] Wikipedia contributors. (2021, February 26). CNN. Wikipedia. https://en.wikipedia.org/wiki/CNN
 
-[3] http://cs231n.github.io/convolutional-networks/
+[3] CS231n Convolutional Neural Networks for Visual Recognition. (2006). Github. https://cs231n.github.io/convolutional-networks/
 
-[4] https://neurohive.io/en/popular-networks/vgg16/
+[4] Hassan, M. U. (2021, February 24). VGG16 – Convolutional Network for Classification and Detection. Neurohive. https://neurohive.io/en/popular-networks/vgg16/
   
   
